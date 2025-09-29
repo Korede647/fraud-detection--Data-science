@@ -14,3 +14,5 @@ df.info()
 # data statistics
 print(df.describe())
 
+# missing values
+# print(df.isnull().sum())
