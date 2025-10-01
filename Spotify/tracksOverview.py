@@ -9,7 +9,7 @@ df = pd.read_csv('Spotify/spotifyData.csv')
 # print(df.head())
 
 # data values and find null values 
-df.info()
+# df.info()
 
 # data statistics
 # print(df.describe())
@@ -17,3 +17,7 @@ df.info()
 # missing values
 # print(df.isnull().sum())
 
+# Duplicates
+print(f"Number of duplicates: {df.duplicated().sum()}")
+
+# *567*123#
