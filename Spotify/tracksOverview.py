@@ -6,10 +6,10 @@ import matplotlib.pyplot as plt
 df = pd.read_csv('Spotify/spotifyData.csv')
 
 # show first 5 rows
-print(df.head())
+# print(df.head())
 
 # data values and find null values 
-# df.info()
+df.info()
 
 # data statistics
 # print(df.describe())
