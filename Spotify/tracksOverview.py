@@ -30,16 +30,14 @@ df['duration_min'] = df['duration_ms'] / 60000
 # plt.title('Tempo Distribution')
 # plt.show()
 
-# df['popularity'].hist(bins=50)
-# plt.title('Popularity')
-# plt.show()
+# Boxplot for duration_min
+sns.boxplot(y=df['duration_min'])
+plt.title('Duration Distribution')
+plt.show()
 
-# df['loudness'].hist(bins=50)
-# plt.title('Loud')
-# plt.show()
-
-df['danceability'].hist(bins=50)
-plt.title('Dance')
+# Genre counts
+sns.countplot(y='track_genre', data=df, order=df['track_genre'].value_counts().index[:20])
+plt.title('Top 20 Genres')
 plt.show()
 
 
