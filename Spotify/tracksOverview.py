@@ -7,6 +7,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import silhouette_score, confusion_matrix  # For pseudo-evaluation
 from sklearn.decomposition import PCA
+from sklearn.inspection import permutation_importance
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -43,9 +44,9 @@ df['duration_min'] = df['duration_ms'] / 60000
 # plt.show()
 
 # Genre counts
-# sns.countplot(y='track_genre', data=df, order=df['track_genre'].value_counts().index[:20])
-# plt.title('Top 20 Genres')
-# plt.show()
+sns.countplot(y='track_genre', data=df, order=df['track_genre'].value_counts().index[:20])
+plt.title('Top 20 Genres')
+plt.show()
 
 # Scatter plot: energy vs danceability
 # sns.scatterplot(x='danceability', y='energy', data=df, hue='track_genre', alpha=0.5)
@@ -74,9 +75,9 @@ outliers = df[(df['tempo'] < (Q1 - 1.5 * IQR)) | (df['tempo'] > (Q3 + 1.5 * IQR)
 # Visualize outliers in boxplots for all numerics
 # df[numeric_cols].plot(kind='box', subplots=True, layout=(3,4), figsize=(12,8))
 # plt.show()
-df[numeric_cols].plot(kind='box', subplots=True, layout=(3,4), figsize=(12,8))
-plt.suptitle('Boxplots of Numeric Features')
-plt.tight_layout(rect=[0, 0, 1, 0.95])  # Adjust layout to prevent title overlap
+# df[numeric_cols].plot(kind='box', subplots=True, layout=(3,4), figsize=(12,8))
+# plt.suptitle('Boxplots of Numeric Features')
+# plt.tight_layout(rect=[0, 0, 1, 0.95])  # Adjust layout to prevent title overlap
 # plt.show()
 
 
@@ -116,9 +117,9 @@ df['anomaly'] = model.fit_predict(X)  # -1 for anomaly, 1 for normal
 # PCA for 2D projection
 pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X)
-sns.scatterplot(x=X_pca[:,0], y=X_pca[:,1], hue=df['anomaly'], palette={1:'blue', -1:'red'})
-plt.title('PCA Projection with Anomalies')
-plt.show()
+# sns.scatterplot(x=X_pca[:,0], y=X_pca[:,1], hue=df['anomaly'], palette={1:'blue', -1:'red'})
+# plt.title('PCA Projection with Anomalies')
+# plt.show()
 
 # Silhouette score (cluster quality, treating anomalies as cluster)
 print(f"Silhouette Score: {silhouette_score(X, df['anomaly']):.4f}")
@@ -129,8 +130,18 @@ print(f"Anomalies detected: { (df['anomaly'] == -1).sum() / len(df):.2%}")
 # Pseudo-confusion if simulating labels (e.g., assume high instrumentalness as anomaly)
 sim_anomaly = (df['instrumentalness'] > 2)  # Z-score >2 as proxy
 cm = confusion_matrix(sim_anomaly, df['anomaly'] == -1)
-sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
-plt.title('Pseudo-Confusion Matrix')
-plt.show()
+# sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+# plt.title('Pseudo-Confusion Matrix')
+# plt.show()
+
+
+# Approximate importances via permutation (drop in score)
+# perm = permutation_importance(model, X, df['anomaly'], scoring=None, n_repeats=5, random_state=42)
+# importances = pd.DataFrame({'Feature': feature_cols, 'Importance': perm.importances_mean})
+# importances = importances.sort_values('Importance', ascending=False)
+# print(importances.head(10))
+# sns.barplot(x='Importance', y='Feature', data=importances.head(10))
+# plt.title('Feature Importances')
+# plt.show()
 
 # *567*123#
