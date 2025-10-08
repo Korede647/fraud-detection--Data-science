@@ -36,12 +36,12 @@ df['duration_min'] = df['duration_ms'] / 60000
 # Histogram for tempo
 # df['tempo'].hist(bins=50)
 # plt.title('Tempo Distribution')
-# plt.show()
+plt.show()
 
 # Boxplot for duration_min
 # sns.boxplot(y=df['duration_min'])
 # plt.title('Duration Distribution')
-# plt.show()
+plt.show()
 
 # Genre counts
 sns.countplot(y='track_genre', data=df, order=df['track_genre'].value_counts().index[:20])
@@ -51,19 +51,19 @@ plt.show()
 # Scatter plot: energy vs danceability
 # sns.scatterplot(x='danceability', y='energy', data=df, hue='track_genre', alpha=0.5)
 # plt.title('Energy vs Danceability by Genre')
-# plt.show()
+plt.show()
 
 # Boxplot for loudness by explicit
 # sns.boxplot(x='explicit', y='loudness', data=df)
 # plt.title('Loudness by Explicit Content')
-# plt.show()
+plt.show()
 
 numeric_cols = ['popularity', 'duration_min', 'danceability', 'energy', 'loudness', 'speechiness', 
                 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 # corr = df[numeric_cols].corr()
 # sns.heatmap(corr, annot=True, cmap='coolwarm')
 # plt.title('Correlation Heatmap')
-# plt.show()
+plt.show()
 
 # IQR for tempo
 Q1 = df['tempo'].quantile(0.25)
